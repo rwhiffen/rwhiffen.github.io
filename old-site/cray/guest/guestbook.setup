@@ -1,0 +1,130 @@
+  $guestbookurl = "Html/guestbook.html";
+  $guestbookreal = "/users/home/rwhiffen/public_html/cray/guest/Html/guestbook.html";
+  $cgiurl = "./guestbook.cgi";
+
+  $cgi_lib_location = "./cgi-lib.pl";
+  $cgi_sol_location = "./cgi-lib.sol";
+  $mail_lib_location = "./mail-lib.pl";
+
+  @bad_words = ("exec");
+
+  $mail = "yes";
+  $recipient = "rwhiffen\@patriot.net";
+  $email_subject = "Entry to Cray Guestbook";
+
+  $linkmail = "yes";
+
+  $remote_mail = "yes";
+
+  $allow_html = yes;
+
+  @required_fields = ("realname", "comments");
+
+  $thank_you_email_text = " Thanks for visiting my Robert Cray guest book!  Please
+Add your name to it!";
+
+
+sub add_form_header
+{
+
+print <<"end_of_add_form_header";
+<HTML>
+<HEAD>
+<TITLE>Guestbook (Add Form)</TITLE>
+</HEAD>
+<BODY>
+<CENTER>
+<H2>Add to my Guestbook</H2>
+</CENTER>
+Please fill in the blanks below to add to my guestbook.  The only
+blanks that you have to fill in are the comments and name section.
+Thanks!
+<P><HR>
+end_of_add_form_header
+
+}
+
+sub thank_you_html_header
+{
+
+print <<"end_of_html";
+<HTML>
+<HEAD>
+<TITLE>Thank You</TITLE>
+</HEAD>
+<BODY>
+<CENTER>
+<P>
+Thank you for signing the Guestbook, $form_data{'realname'}
+</CENTER>
+<P>
+Your entry has now been added to the guestbook as
+follows...
+<BLOCKQUOTE>
+end_of_html
+}
+
+
+sub missing_required_field_note
+{
+print <<"end_of_note";
+<HTML>
+<HEAD>
+<TITLE>Data Entry Error</TITLE>
+</HEAD>
+<BODY BGCOLOR = "FFFFFF" TEXT = "000000">
+<BLOCKQUOTE>
+Woopsy, You forgot to fill out $field and I am not allowed to add
+your guestbook entry without it.  Would you please type something in
+below...
+</BLOCKQUOTE>
+end_of_note
+}
+
+sub output_add_form
+{
+
+print <<"end_of_add_form";
+<FORM METHOD = "POST" ACTION = "$cgiurl">
+<TABLE>
+<TR>
+<TH ALIGN = "left">Your Name:</TH>
+<TD><INPUT TYPE = "text" NAME = "realname" SIZE = "40"
+           VALUE = "$form_data{'realname'}"></TD>
+</TR><TR>
+<TH ALIGN = "left">E-Mail:</TH>
+<TD><INPUT TYPE = "text" NAME = "email" SIZE = "40"
+           VALUE = "$form_data{'email'}"></TD>
+</TR><TR>
+<TH ALIGN = "left">URL:</TH>
+<TD><INPUT TYPE = "text" NAME = "url" SIZE = "50"
+           VALUE = "$form_data{'url'}"></TD>
+</TR><TR>
+<TH ALIGN = "left">City:</TH>
+<TD><INPUT TYPE = "text" NAME = "city" SIZE = "15"
+           VALUE = "$form_data{'city'}"></TD>
+</TR><TR>
+<TH ALIGN = "left">State:</TH>
+<TD><INPUT TYPE = "text" NAME = "state" SIZE = "4"
+           VALUE = "$form_data{'state'}"></TD>
+</TR><TR>
+<TH ALIGN = "left">Country:</TH>
+<TD><INPUT TYPE = "text" NAME = "country" SIZE = "15"
+           VALUE = "$form_data{'country'}"></TD>
+</TR><TR>
+<TH ALIGN = "left">Comments:</TH>
+<TD><TEXTAREA NAME = "comments" COLS = "60" ROWS = "4">
+$form_data{'comments'}</TEXTAREA></TD>
+</TR></TABLE>
+<CENTER>
+<INPUT TYPE = "submit" VALUE = "Submit Addition">
+<INPUT TYPE = "reset">
+</FORM>
+<P>
+<A HREF = "$guestbookurl">Back to the Guestbook Entries</A><BR>
+</CENTER>
+</BODY>
+</HTML>
+end_of_add_form
+}
+

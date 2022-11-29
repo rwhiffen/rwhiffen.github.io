@@ -1,0 +1,219 @@
+                            BASIC INFORMATION
+
+Name: Selena Sol's Guestbook
+Version: 3.0
+Last Modified: 08-01-96
+
+                               DESCRIPTION
+
+This guestbook script allows users to dynamically manipulate a guestbook
+HTML file by adding their own entries to the document.
+
+                          COPYRIGHT INFORMATION
+
+This application was written by Selena Sol (selena@eff.org,
+http://www.eff.org/~erict) having been inspired by countless other Perl
+authors.  Feel free to copy, cite, reference, sample, borrow, resell or
+plagiarize the contents.  However, if you don't mind, please let me know
+where it goes so that I can at least watch and take part in the
+development of the memes. Information wants to be free, support public
+domain freware.  Donations are appreciated and will be spent on further
+upgrades and other public domain scripts.
+
+Finally, PLEASE SEND WORKING URL's to selena@eff.org.  I maintain a list
+of implementations around the world.
+
+				 SUPPORT
+
+This script comes with no gaurentees or warranties.  I am not a
+programming professional.  I am a web-hobbiest and my scripts are
+continually evolving as I learn more. Don't expect the scripts to be
+perfect. 
+
+Bug reports are greatly appreciated but installation support is
+extremely discouraged. I have attempted to include as much information as
+I could think of in this README and in the Customization and Installation
+FAQ available at http://www.eff.org/~erict/Scripts/.  Please try ALL
+available sources of information BEFORE you email me.  But if you must,
+make sure to include the following bits of information (I may not respond
+to your email if you do not answer ALL of the following questions):
+
+1. What type of Web server are you running?
+2. What type of Operating System is the Web server running on?
+
+3. What is the "exact" error message from the Web?
+4. What is the "exact" error message in your web server's error log?
+5. What is the "exact" error message you receive when running the script
+       from the command line.
+
+6. Are you running this script on an ISP?  If so, what is the email
+       address of the Sysadmin there?
+7. Are you using a virtual server setup?  If so, what is the root path set
+       in your Web server's environment?
+
+8. In which directory is the Perl interpreter located?
+9. In which directory is sendmail located (if you are using a script which
+       demands use of sendmail)
+
+Again, I MAY NOT ANSWER YOUR QUESTION unless you have answered all nine of
+these questions.
+
+                BASIC INSTALLATION (DOWNLOADING THE SCRIPT)
+
+It is recommended that you point your Web browser to "Selena Sol's Script
+Archive" to get the latest version of this script.  The Script Archive is
+located at the following URL:
+
+                    http://www.eff.org/~erict/Scripts/
+
+From the "Script Archive" frontpage follow the hyperlinks to the detailed
+page dedicated to this script.  Then click on the hyperlink "Download the
+scripts as a single tar file".
+
+                BASIC INSTALLATION (UNARCHIVING THE APPLICATION)
+
+Once you have downloaded the TAR file (a single file containing all
+associated files in their relative positions under the root directory),
+transfer the TAR file to an executable directory on your web server and
+untar them.  On UNIX systems, you may type the following at the
+command line:
+
+                          tar xvfp filename.tar
+
+       (If you are using a non-UNIX Operating System, you may 
+       download a TAR/UNTAR program by pointing your Web browser
+       to http://www.shareware.com).
+
+                 BASIC INSTALLATION (SETTING PERMISSIONS)
+
+Your Web server must have permission to read, write or execute as needed.
+Each sub-directory and file in the application has its own correct
+permissions level associated with it.  Once you have unarchived (UNTAR)
+the application, you must then set the correct permissions.  On UNIX
+systems, you will use the "chmod" command.   The following table is a
+quick guide to setting permissions for UNIX servers.
+
+	PERMISSION	COMMAND
+	rwxrwxrwx 	chmod 777 filename		
+	rwxrwxr-x	chmod 775 filename
+	rwxr-xr-x	chmod 755 filename
+	rw-rw-r--	chmod 664 filename
+	rw-r--r--	chmod 644 filename
+
+	Note: Not setting your permissions correctly is the 
+	NUMBER 1 reason why installations fail.  Take time to 
+	get this right.
+
+The actual permissions required for the subdirectories and files used by
+this application are listed in the next section.
+
+         BASIC INSTALLATION (FILES, DIRECTORIES, AND PERMISSIONS)
+
+The TAR file will then expand into a root directory called Guestbook.
+Guestbook will contain several sub-directories and several files.  
+The diagram below depicts the directory structure as well as the
+permissions which must be applied to the files and subdirectories used by
+the application.
+
+Guestbook Root Directory (drwxr-xr-x)
+   |____Html
+   |       |____guestbook.html (-rw-rw-rw-)
+   |____cgi-lib.pl (-rw-r--r--)
+   |____cgi-lib.sol (-rw-r--r--)
+   |____guestbook.cgi (-rwxr-xr-x)
+   |____guestbook.setup (-rw-r--r--)
+   |____mail-lib.pl (-rw-r--r--)
+
+
+Html is a subdirectory containing the guestbook.html which contains all
+	the guestbook entries.  The directory must be readable, writable and
+	executable if it is used.  It is possible that you are using a server
+	which does not allow users to reference HTML files in the same
+	directory tree as CGI files.  Thus, you will need to move
+	guestbook.html to an HTML-friendly directory and change the
+	reference in guestbook.setup to mark the change.
+
+	guestbook.html is the actual guestbook.  It must be readable and
+	writable by the web server and placed in a directory which web
+	browsers are allowed to reference HTML files.  
+
+	On the eleventh line, you must also change the <FORM> tag to
+	reference guestbook.cgi on your local server.
+
+	Also, guestbook.html MUST include the tag "<!--begin-->" which
+	guestbook.cgi will use to determine the top of the guestbook so
+	that it will be able to add new guestbook entries at the top of
+	the guestbook.
+
+cgi-lib.pl - The library file used to read and parse incoming form data.
+
+cgi-lib.sol - The library file used for the database locking routines
+
+guestbook.cgi - is the main script which processes guestbook entries.  It
+	must be readable and executable by the web server.
+
+guestbook.setup - is a file which contains server specific options
+	and variables which must be defined for guestbook.cgi to run.
+	It must be readable by the web server. 
+
+	guestbook.setup defines the following variables.
+
+	$guestbookurl is the location of the html document that you will
+		use to display the contents of your guestbook.
+	$guestbookreal is the actual location of that file on your server.
+	$cgiurl is the url of this script
+	$cgi_lib_location and $mail_lib_location are the locations on the
+		server of the two library files that accompany this script.
+	@bad_words is a list of words which we do not want to appear in our
+		guestbook.  Anyword in this list will be removed before
+		the guestbook is modified.  If you don't want to censor,
+		set @bad_words = ();
+	$mail determines whether or not to email the guestbook administrator
+		when a new entry has been made.  If it is set to yes, the
+		admin will be emailed, no, she won't.  $recipient is the
+		email address of the admin who should receive the email
+		notification and $recipient_server is their email server.
+	$email_subject is the subject of the email you will send
+		the admin.
+	$linkmail determines if you want email address on your guestbook
+		to be clickable...if you want them to be, set this equal
+		to yes, if not, no
+ 	$remote_mail determines whether or not a thank you note is sent
+		back to the guest who signed the guest book.  If you set
+		this equal to yes, they will reeive a thank you note.  Set
+ 		it equal to no and they won't.
+	$allow_html allows you to disallow or allow the use of HTML tags in
+ 	 	guestbook entries.  If you set this equal to yes, guests
+		will be able to use HTML, no, they won't.
+	@required_fields is the list of fields which the guest MUST fill
+		in in order to submit their information.
+	$thank_you_email_text is the text of the email message that you
+		will send back to people who submit guestbook entries.
+
+	guestbook.setup also includes the following sub-routines.  You may
+	change the text within the "here" document boundaries.
+
+	add_form_header is used to output the header of the form that
+		clients see when they want to add a guestbook entry.  
+	thank_you_html_header is used for the header of the HTML thank you
+		response sent to the client after they submit a guestbook
+		entry.
+	missing_required_field_note is used to tell the client that they
+		did not fill out all of the required fields.
+	output_add_form is the actual form which clients use to add their
+		information.  Many of these arte hardcoded so I do not
+		recommend that you change this bit of HTML unless you are
+		prepared top also edit the script.
+
+mail-lib.pl - The library file used to send mail to the form admin. You must
+        define the local path of sendmail at line 42 of this library.  If
+        you are using an NT server and cannot use sendmail at all, you
+        must replace this version with the SMTP version available at
+        http://www.eff.org/~erict/Scripts/
+
+			   RUNNING THE SCRIPT
+
+This script should be run by pointing your browser to the HTML guestbook
+file.  For example, you might use a URL such as:
+
+    	         http://www.foobar.com/Guestbook/guestbook.html

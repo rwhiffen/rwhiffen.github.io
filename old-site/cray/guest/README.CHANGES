@@ -1,0 +1,25 @@
+08-01-96
+	Created the README.CHANGES and README.INSTALLATION files
+	Replaced all usages of "here document printing with qq! method.
+		To many people were having trouble because when they
+		transferred the files using binary mode, invisible
+		charactes would get stuck in the script and screw up the
+		here formatting.  qq! is used to change the print
+		delineator from double quotes (") to bang (!).  We do this
+		so that double quotes within the print string will not
+		need to be escaped.
+        Added informative error messages to the open commands
+	Created a setup file so that when new upgrades come out, the
+		customized options can remain intact.
+	Moved user-configurable HTML and text to the setup file so that
+		when upgrades come out, the admin will not delete such
+		customizations.
+	Added an extra else loop after the printing to the Guestbook of
+		Country.  If country was not filled out before, the date
+		would get smushed onto the location line.  Now the script
+		will print a <BR> if the person did not fill out the
+		country.
+	Changed all of the options variables from 1 and 0 to yes and no to
+		make them more obvious.  Thus, now if you want the script
+		to send you mail when a new entry is made, you set $mail
+		equal to yes instead of equal to one.
