@@ -8,4 +8,11 @@
    border-width: 5px;
    border-color: gray;
  }
+
+.diff-hr {
+   background-color: #8D9EFF;
+   border-style: inset;
+   border-width: 1px;
+   border-color: gray;
+}
 </style>
